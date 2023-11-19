@@ -4,7 +4,6 @@ import dotenv from "dotenv";
 import apiRouter from "./api/router";
 import { connectDB } from "./utils/db/connect";
 import env from "./utils/env/env";
-import { MailType } from "./utils/mailer/mail-type";
 
 dotenv.config();
 
@@ -12,7 +11,6 @@ const app = express();
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-console.log(`Environment: ${env.name} \n ${MailType.VERIFICATION_CODE}`);
 
 // router
 app.use("/api", apiRouter);
