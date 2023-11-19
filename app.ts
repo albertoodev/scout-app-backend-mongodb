@@ -13,7 +13,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use("/api", apiRouter);
 
 const server = createServer(app);
-server.listen(env.port,async ()  => {
+server.listen(env.port, () => {
   try {
     connectDB(env.dbUrl);
     console.log(`Server is listening on port ${env.port}...`);

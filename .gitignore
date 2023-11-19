@@ -3,3 +3,5 @@ node_modules
 package-lock.json
 utils/env/production.ts
 utils/env/test.ts
+# unimplimented
+api/scout/models/scout.ts
