@@ -2,8 +2,8 @@ import express from "express";
 import { createServer } from "http";
 import dotenv from "dotenv";
 import apiRouter from "./api/router";
-import { connectDB } from "./config/db/connect";
-import env from "./config/env/development";
+import { connectDB } from "./utils/db/connect";
+import env from "./utils/env/development";
 
 dotenv.config();
 
