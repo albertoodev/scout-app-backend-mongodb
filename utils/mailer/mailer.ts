@@ -2,14 +2,14 @@ import nodemailer from "nodemailer";
 import { google } from "googleapis";
 import { MailOptions } from "./mail-options";
 import env from "../env/env";
+import templateContent from "./templates";
 
 export async function sendEmail(options: MailOptions): Promise<boolean> {
   return new Promise<boolean>(async (resolve) => {
-    if (!options.text && !options.mailType) {
+    if (!options.text && !options.html) {
       throw new Error("You must provide either text or htmlFileName");
     }
     
-
     // loading env variables
     let clientID = env.mailer.clientID;
     let clientSecret = env.mailer.clientSecret;
@@ -22,7 +22,7 @@ export async function sendEmail(options: MailOptions): Promise<boolean> {
       clientSecret,
       redirectUri
     );
-
+    console.log(refreshToken);
     // Set the OAuth2 client credentials
     oAuth2Client.setCredentials({
       refresh_token: refreshToken,
@@ -42,9 +42,14 @@ export async function sendEmail(options: MailOptions): Promise<boolean> {
       },
     } as nodemailer.TransportOptions);
 
-    const mailOptions = {
+    let mailOptions: nodemailer.SendMailOptions = {
       from: email,
-      ...options, // Include the provided options
+      to: options.to,
+      subject: options.subject,
+      text: options.text,
+      html: !options.html
+        ? undefined
+        : await templateContent(options.html.mailType, options.html.mailData),
     };
 
     // Send the email

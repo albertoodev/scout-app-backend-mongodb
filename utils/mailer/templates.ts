@@ -9,7 +9,7 @@ async function getTemplateContent(
   emailData: any
 ): Promise<string> {
   const emailTemplate = await fs.readFile(
-    `./utils/mailer/templates/${templateFileName}.html}`,
+    `./utils/mailer/templates/${templateFileName}.html`,
     "utf8"
   );
   return replacePlaceholders(emailTemplate, emailData);
