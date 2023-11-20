@@ -1,8 +1,8 @@
 import mongoose from "mongoose";
 
-export function connectDB(url: string): void {
+export const connectDB = function (url: string) {
   mongoose.connect(url);
   mongoose.connection.once("open", () => {
     console.log("Connected to MongoDB");
   });
-}
+};
