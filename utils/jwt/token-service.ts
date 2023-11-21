@@ -1,12 +1,12 @@
 import jwt, { JwtPayload } from "jsonwebtoken";
-import dotenv from "dotenv";
-dotenv.config();
+import env from "../env/env";
 
-const secretKey = process.env.JWT_SECRET_KEY;
+const secretKey = env.jwtSecretKey;
 if (!secretKey) {
   throw new Error("JWT secret key is not defined.Check env.");
 }
 
+/// i think i ll add the role to the payload later for the authorization middleware
 const generatePasswordResetToken = (
   id: string,
   email: string,
