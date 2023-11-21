@@ -2,7 +2,6 @@ import { Request, Response, NextFunction } from "express";
 import { JwtPayload } from "jsonwebtoken";
 import { verifyPasswordResetToken } from "../jwt/token-service";
 import env from "../env/env";
-import { create } from "domain";
 import { createCustomError } from "../errors/custom-error";
 
 const SECRET_KEY: string = env.jwtSecretKey;
