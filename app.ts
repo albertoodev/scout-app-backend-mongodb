@@ -6,6 +6,7 @@ import { connectDB } from "./utils/db/connect";
 import env from "./utils/env/env";
 import errorHandler from "./utils/middlewares/error-handler";
 
+
 const app = express();
 
 app.use(express.json());
