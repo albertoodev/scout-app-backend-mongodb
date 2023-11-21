@@ -5,3 +5,5 @@ utils/env/production.ts
 utils/env/test.ts
 # unimplimented
 api/scout/models/scout.ts
+# vs code
+.vscode

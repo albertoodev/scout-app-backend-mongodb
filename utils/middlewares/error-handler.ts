@@ -7,6 +7,7 @@ const errorHandlerMiddleware = (
   res: Response,
   next: NextFunction
 ) => {
+  console.error(err);
   if (err instanceof CustomError)
     return res.status(err.statusCode).send({ message: err.message });
   return res.status(500).send({ message: "Something went wrong" });
