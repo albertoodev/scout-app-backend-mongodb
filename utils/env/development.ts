@@ -5,6 +5,7 @@ export default {
   port: process.env.PORT || 3000,
   dbUrl:
     process.env.MONGO_URL || "mongodb://localhost:27017/scout-management-app",
+  jwtSecretKey: process.env.JWT_SECRET_KEY || "default_secret_key",
   mailer: {
     clientID: process.env.CLIENT_ID,
     clientSecret: process.env.CLIENT_SECRET,
