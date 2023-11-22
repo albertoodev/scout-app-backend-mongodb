@@ -66,4 +66,4 @@ const UserSchema: Schema<IUser> = new mongoose.Schema({
 
 const User = mongoose.model<IUser>("User", UserSchema);
 
-export { User };
+export { User, IUser };
