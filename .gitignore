@@ -7,3 +7,5 @@ utils/env/test.ts
 api/scout/models/scout.ts
 # vs code
 .vscode
+# git 
+.git 
