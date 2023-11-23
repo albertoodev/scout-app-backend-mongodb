@@ -20,7 +20,6 @@ const RegistrationCodeSchema: Schema<IRegistrationCode> = new mongoose.Schema({
   },
   createdAt: {
     type: Date,
-    expires: 60 * 5, // expires in 5 minutes
     default: Date.now,
   },
   updatedAt: {
