@@ -2,7 +2,7 @@ import mongoose, { Document, Schema } from "mongoose";
 import {
   emailRegExp,
   emailVerificationCodeRegExp,
-} from "../../../utils/reg-exp/reg-exp";
+} from "../../../../utils/reg-exp/reg-exp";
 
 interface IEmailVerificationCode extends Document {
   code: string;

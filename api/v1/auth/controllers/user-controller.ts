@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import { createCustomError } from "../../../utils/errors/custom-error";
+import { createCustomError } from "../../../../utils/errors/custom-error";
 
 const getAllUsers = async (req: Request, res: Response): Promise<void> => {
   throw createCustomError("Not implemented", 501);

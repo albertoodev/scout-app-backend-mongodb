@@ -1,5 +1,5 @@
 import mongoose, { Document, Schema } from "mongoose";
-import { emailRegExp } from "../../../utils/reg-exp/reg-exp";
+import { emailRegExp } from "../../../../utils/reg-exp/reg-exp";
 
 interface IUser extends Document {
   firstName: string;

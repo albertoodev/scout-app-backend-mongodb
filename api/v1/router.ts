@@ -1,6 +1,6 @@
 import { Router } from "express";
 import { Request, Response } from "express";
-import { createCustomError } from "../utils/errors/custom-error";
+import { createCustomError } from "../../utils/errors/custom-error";
 import authRouter from "./auth/routers/auth-router";
 
 const router = Router();
