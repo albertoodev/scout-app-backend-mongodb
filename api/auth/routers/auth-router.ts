@@ -1,12 +1,14 @@
 import { Router } from "express";
 import userRouter from "./user-router";
+import registrationCodeRouter from "./registration-code-router";
 import authController from "../controllers/auth-controller";
 
 const router = Router();
 
 // user routes
 router.use("/users", userRouter);
-
+// registration code routes
+router.use("/registration-codes", registrationCodeRouter);
 // login routes
 router.post("/login", authController.login);
 
