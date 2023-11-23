@@ -1,14 +1,18 @@
 import { Router } from "express";
+import userRouter from "./user-router";
 import authController from "../controllers/auth-controller";
 
 const router = Router();
+
+// user routes
+router.use("/users", userRouter);
 
 // login routes
 router.post("/login", authController.login);
 
 // registration routes
-router.post("/verifyEmail", authController.verifyEmail);
-router.post("/checkVerificationCode", authController.checkVerificationCode);
+router.post("/verify-email", authController.verifyEmail);
+router.post("/check-verification-code", authController.checkVerificationCode);
 router.post("/register", authController.register);
 
 // forgot password routes
