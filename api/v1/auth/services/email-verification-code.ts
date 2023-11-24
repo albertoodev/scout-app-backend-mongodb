@@ -1,7 +1,5 @@
-import {
-  EmailVerificationCode,
-  IEmailVerificationCode,
-} from "../models/email-verification-code";
+import EmailVerificationCode from "../models/email-verification-code";
+import IEmailVerificationCode from "../interfaces/email-verification-code";
 
 const createEmailVerificationCode = async (
   code: string,
