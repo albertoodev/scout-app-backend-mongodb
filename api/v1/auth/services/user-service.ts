@@ -9,8 +9,12 @@ const getById = async (id: string): Promise<IUser> => {
   return await User.findById(id).select("-password");
 };
 
-const getOne = async (uniqueSelector: string): Promise<IUser> => {
-  return await User.findOne({ uniqueSelector }).select("-password");
+const getByEmail = async (email: string): Promise<IUser> => {
+  return await User.findOne({ email }).select("-password");
+};
+
+const getByPhone = async (phone: string): Promise<IUser> => {
+  return await User.findOne({ phone }).select("-password");
 };
 
 const getAll = async (queries: any): Promise<IUser[]> => {
@@ -30,7 +34,8 @@ const remove = async (id: string): Promise<IUser | null> => {
 export default {
   create,
   getById,
-  getOne,
+  getByEmail,
+  getByPhone,
   getAll,
   update,
   remove,

@@ -2,6 +2,7 @@ import { Router } from "express";
 import userRouter from "./user-router";
 import registrationCodeRouter from "./registration-code-router";
 import authController from "../controllers/auth-controller";
+import requiredFields from "../../../../utils/middlewares/required-fields";
 
 const router = Router();
 
@@ -10,7 +11,14 @@ router.use("/users", userRouter);
 // registration code routes
 router.use("/registration-codes", registrationCodeRouter);
 // login routes
-router.post("/login", authController.login);
+router.post(
+  "/login",
+  requiredFields([
+    ["phone", "password"],
+    ["email", "password"],
+  ]),
+  authController.login
+);
 
 // registration routes
 router.post("/verify-email", authController.verifyEmail);
