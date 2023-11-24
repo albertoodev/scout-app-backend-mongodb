@@ -8,8 +8,10 @@ const router = Router();
 
 // user routes
 router.use("/users", userRouter);
+
 // registration code routes
 router.use("/registration-codes", registrationCodeRouter);
+
 // login routes
 router.post(
   "/login",
