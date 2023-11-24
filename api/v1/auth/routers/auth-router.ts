@@ -21,14 +21,33 @@ router.post(
 );
 
 // registration routes
-router.post("/verify-email", authController.verifyEmail);
-router.post("/check-verification-code", authController.checkVerificationCode);
-router.post("/register", authController.register);
+router.post(
+  "/verify-email",
+  requiredFields([["email"]]),
+  authController.verifyEmail
+);
+
+router.post(
+  "/check-verification-code",
+  requiredFields([["email", "code"]]),
+  authController.checkVerificationCode
+);
+
+router.post(
+  "/register",
+  requiredFields([
+    ["firstName", "lastName", "email", "password", "phone", "code"],
+  ]),
+  authController.register
+);
 
 // forgot password routes
 router
   .route("/reset-password")
-  .post(authController.forgotPassword)
-  .put(authController.resetPassword);
+  .post(requiredFields([["email"]]), authController.forgotPassword)
+  .put(
+    requiredFields([["email", "password", "confirmPassword"]]),
+    authController.resetPassword
+  );
 
 export default router;
