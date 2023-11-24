@@ -1,13 +1,7 @@
-import mongoose, { Document, Schema } from "mongoose";
+import mongoose, { Schema } from "mongoose";
+import IRegistrationCode from "../interfaces/registration0code";
 
 /// the id of the registration code is the registration code itself (string)
-interface IRegistrationCode extends Document {
-  used: boolean;
-  role: string;
-  createdAt: Date;
-  updatedAt?: Date;
-}
-
 const RegistrationCodeSchema: Schema<IRegistrationCode> = new mongoose.Schema({
   used: {
     type: Boolean,
@@ -33,4 +27,4 @@ const RegistrationCode = mongoose.model<IRegistrationCode>(
   RegistrationCodeSchema
 );
 
-export { RegistrationCode, IRegistrationCode };
+export default RegistrationCode;

@@ -3,14 +3,7 @@ import {
   emailRegExp,
   emailVerificationCodeRegExp,
 } from "../../../../utils/reg-exp/reg-exp";
-
-interface IEmailVerificationCode extends Document {
-  code: string;
-  email: string;
-  type: string;
-  createdAt: Date;
-  updatedAt?: Date;
-}
+import IEmailVerificationCode from "../interfaces/email-verification-code";
 
 const EmailVerificationCodeSchema: Schema<IEmailVerificationCode> =
   new mongoose.Schema({
@@ -41,4 +34,4 @@ const EmailVerificationCode = mongoose.model<IEmailVerificationCode>(
   "EmailVerificationCode",
   EmailVerificationCodeSchema
 );
-export { EmailVerificationCode, IEmailVerificationCode };
+export default EmailVerificationCode;

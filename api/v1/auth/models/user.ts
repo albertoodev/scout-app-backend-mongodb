@@ -1,18 +1,6 @@
-import mongoose, { Document, Schema } from "mongoose";
+import mongoose, { Schema } from "mongoose";
 import { emailRegExp } from "../../../../utils/reg-exp/reg-exp";
-
-interface IUser extends Document {
-  firstName: string;
-  lastName: string;
-  email: string;
-  password: string;
-  phone: string;
-  role: string;
-  bio?: string;
-  children?: mongoose.Types.ObjectId[];
-  createdAt: Date;
-  updatedAt?: Date;
-}
+import IUser from "../interfaces/user";
 
 const UserSchema: Schema<IUser> = new mongoose.Schema({
   firstName: {
@@ -66,4 +54,4 @@ const UserSchema: Schema<IUser> = new mongoose.Schema({
 
 const User = mongoose.model<IUser>("User", UserSchema);
 
-export { User, IUser };
+export default User;
