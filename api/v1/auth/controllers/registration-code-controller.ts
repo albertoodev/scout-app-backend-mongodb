@@ -1,8 +1,16 @@
 import { Request, Response } from "express";
 import { createCustomError } from "../../../../utils/errors/custom-error";
+import IRegistrationCode from "../interfaces/registration-code";
+import RegistrationCodeService from "../services/registration-code";
 
+// create registration code
 const create = async (req: Request, res: Response): Promise<void> => {
-  throw createCustomError("Not implemented", 501);
+  const data: IRegistrationCode = req.body;
+  const registrationCode = await RegistrationCodeService.create(data);
+  if (!registrationCode) {
+    throw createCustomError("Registration code not created", 500);
+  }
+  res.status(201).json({ registrationCode });
 };
 
 const verify = async (req: Request, res: Response): Promise<void> => {

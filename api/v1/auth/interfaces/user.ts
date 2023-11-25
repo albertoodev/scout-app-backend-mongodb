@@ -5,7 +5,7 @@ interface IUser extends Document {
   firstName: string;
   lastName: string;
   email: string;
-  password: string;
+  password: string | undefined;
   phone: string;
   bio?: string;
   code: mongoose.Types.ObjectId | IRegistrationCode;
