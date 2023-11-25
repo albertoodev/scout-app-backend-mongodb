@@ -1,7 +1,7 @@
 import { Document } from "mongoose";
 
 interface IEmailVerificationCode extends Document {
-  code: string;
+  verCode: string;
   email: string;
   type: string;
   createdAt: Date;

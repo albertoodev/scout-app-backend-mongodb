@@ -1,5 +1,5 @@
 import mongoose, { Schema } from "mongoose";
-import { emailRegExp } from "../../../../utils/reg-exp/reg-exp";
+import regExp from "../../../../utils/reg-exp/reg-exp";
 import IUser from "../interfaces/user";
 
 const UserSchema: Schema<IUser> = new mongoose.Schema({
@@ -17,7 +17,7 @@ const UserSchema: Schema<IUser> = new mongoose.Schema({
     type: String,
     unique: true,
     lowercase: true,
-    match: [emailRegExp, "Please provide a valid email"],
+    match: [regExp.email, "Please provide a valid email"],
   },
   password: {
     type: String,
@@ -29,20 +29,14 @@ const UserSchema: Schema<IUser> = new mongoose.Schema({
     required: [true, "Please provide a phone number"],
     unique: true,
   },
-  role: {
-    type: String,
-    enum: ["admin", "leader", "parent"],
-    default: "parent",
-  },
+
   bio: {
     type: String,
   },
-  children: [
-    {
-      type: Schema.Types.ObjectId,
-      ref: "Scout",
-    },
-  ],
+  code: {
+    type: Schema.Types.ObjectId,
+    ref: "EmailVerificationCode",
+  },
   createdAt: {
     type: Date,
     default: Date.now,

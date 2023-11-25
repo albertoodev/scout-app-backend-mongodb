@@ -6,9 +6,8 @@ interface IUser extends Document {
   email: string;
   password: string;
   phone: string;
-  role: string;
   bio?: string;
-  children?: mongoose.Types.ObjectId[];
+  code: mongoose.Types.ObjectId;
   createdAt: Date;
   updatedAt?: Date;
 }
