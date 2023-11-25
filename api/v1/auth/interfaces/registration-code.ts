@@ -5,8 +5,7 @@ interface IRegistrationCode extends Document {
   role: string;
   limit: number;
   children?: mongoose.Types.ObjectId[];
-  createdAt: Date;
-  updatedAt?: Date;
+  createdAt?: Date;
 }
 
 export default IRegistrationCode;

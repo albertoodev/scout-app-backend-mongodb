@@ -35,14 +35,11 @@ const UserSchema: Schema<IUser> = new mongoose.Schema({
   },
   code: {
     type: Schema.Types.ObjectId,
-    ref: "EmailVerificationCode",
+    ref: "RegistrationCode",
   },
   createdAt: {
     type: Date,
     default: Date.now,
-  },
-  updatedAt: {
-    type: Date,
   },
 });
 

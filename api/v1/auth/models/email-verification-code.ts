@@ -1,5 +1,5 @@
-import mongoose, { Document, Schema } from "mongoose";
-import regExp from "../../../../utils/reg-exp/reg-exp";
+import mongoose, { Schema } from "mongoose";
+import constants from "../../../../utils/constants/constants";
 import IEmailVerificationCode from "../interfaces/email-verification-code";
 
 const EmailVerificationCodeSchema: Schema<IEmailVerificationCode> =
@@ -8,13 +8,13 @@ const EmailVerificationCodeSchema: Schema<IEmailVerificationCode> =
       type: String,
       required: true,
       unique: true,
-      match: [regExp.code, "Please provide a valid code"],
+      match: [constants.regExp.code, "Please provide a valid code"],
     },
     email: {
       type: String,
       required: true,
       lowercase: true,
-      match: [regExp.email, "Please provide a valid email"],
+      match: [constants.regExp.email, "Please provide a valid email"],
     },
     type: {
       type: String,

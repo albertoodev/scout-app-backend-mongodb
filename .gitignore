@@ -9,3 +9,6 @@ api/v1/scout/models/scout.ts
 .vscode
 # git 
 .git 
+
+# test
+test.ts
