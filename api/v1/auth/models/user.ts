@@ -1,6 +1,6 @@
 import mongoose, { Schema } from "mongoose";
-import regExp from "../../../../utils/reg-exp/reg-exp";
 import IUser from "../interfaces/user";
+import constants from "../../../../utils/constants/constants";
 
 const UserSchema: Schema<IUser> = new mongoose.Schema({
   firstName: {
@@ -17,7 +17,7 @@ const UserSchema: Schema<IUser> = new mongoose.Schema({
     type: String,
     unique: true,
     lowercase: true,
-    match: [regExp.email, "Please provide a valid email"],
+    match: [constants.regExp.email, "Please provide a valid email"],
   },
   password: {
     type: String,

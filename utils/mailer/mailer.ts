@@ -1,7 +1,7 @@
 import nodemailer from "nodemailer";
 import { google } from "googleapis";
 import { MailOptions } from "./mail-options";
-import env from "../env/env";
+import constants from "../constants/constants";
 import templateContent from "./templates";
 
 export async function sendEmail(options: MailOptions): Promise<boolean> {
@@ -10,11 +10,11 @@ export async function sendEmail(options: MailOptions): Promise<boolean> {
       throw new Error("You must provide either text or htmlFileName");
     }
     
-    // loading env variables
-    let clientID = env.mailer.clientID;
-    let clientSecret = env.mailer.clientSecret;
-    let redirectUri = env.mailer.redirectUri;
-    let refreshToken = env.mailer.refreshToken;
+    // loading constants variables
+    let clientID = constants.mailer.clientID;
+    let clientSecret = constants.mailer.clientSecret;
+    let redirectUri = constants.mailer.redirectUri;
+    let refreshToken = constants.mailer.refreshToken;
 
     // Create an OAuth2 client
     const oAuth2Client = new google.auth.OAuth2(
@@ -28,7 +28,7 @@ export async function sendEmail(options: MailOptions): Promise<boolean> {
       refresh_token: refreshToken,
     });
 
-    const email = env.mailer.email;
+    const email = constants.mailer.email;
 
     const transporter = nodemailer.createTransport({
       service: "gmail",

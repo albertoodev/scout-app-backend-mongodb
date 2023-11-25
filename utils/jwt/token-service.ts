@@ -1,9 +1,9 @@
 import jwt, { JwtPayload } from "jsonwebtoken";
-import env from "../env/env";
+import constants from "../constants/constants";
 
-const secretKey = env.jwtSecretKey;
+const secretKey = constants.jwtSecretKey;
 if (!secretKey) {
-  throw new Error("JWT secret key is not defined.Check env.");
+  throw new Error("JWT secret key is not defined.Check the constant file.");
 }
 
 /// i think i ll add the role to the payload later for the authorization middleware
