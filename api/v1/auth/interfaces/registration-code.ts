@@ -4,7 +4,7 @@ import mongoose, { Document } from "mongoose";
 interface IRegistrationCode extends Document {
   role: string;
   limit: number;
-  children?: mongoose.Types.ObjectId[];
-  createdAt: Date;
+  children?: mongoose.Types.ObjectId[] | string[];
+  createdAt: Date | undefined;
 }
 export default IRegistrationCode;

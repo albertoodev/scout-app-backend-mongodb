@@ -2,10 +2,12 @@ import { Request, Response } from "express";
 import { createCustomError } from "../../../../utils/errors/custom-error";
 import IRegistrationCode from "../interfaces/registration-code";
 import RegistrationCodeService from "../services/registration-code";
+import { listToObjectId } from "../../../../utils/db/utils";
 
 // create registration code
 const create = async (req: Request, res: Response): Promise<void> => {
-  const data: IRegistrationCode = req.body;
+  let data: IRegistrationCode = req.body;
+  data.children = listToObjectId((data.children as string[]) ?? []);
   const registrationCode = await RegistrationCodeService.create(data);
   if (!registrationCode) {
     throw createCustomError("Registration code not created", 500);
