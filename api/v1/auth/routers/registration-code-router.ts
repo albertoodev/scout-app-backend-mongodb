@@ -5,14 +5,15 @@ const router = Router();
 
 router
   .route("/")
-  .post(registrationsCodeController.createRegistrationCode)
-  .get(registrationsCodeController.getRegistrationCodes);
+  .post(registrationsCodeController.create)
+  .get(registrationsCodeController.getAll);
 
 router
   .route("/:id")
-  .put(registrationsCodeController.updateRegistrationCode)
-  .delete(registrationsCodeController.deleteRegistrationCode);
+  .get(registrationsCodeController.getById)
+  .put(registrationsCodeController.update)
+  .delete(registrationsCodeController.remove);
 
-router.post("/verify", registrationsCodeController.verifyRegistrationCode);
+router.post("/verify", registrationsCodeController.verify);
 
 export default router;
