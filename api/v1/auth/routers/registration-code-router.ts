@@ -8,12 +8,13 @@ router
   .post(registrationsCodeController.create)
   .get(registrationsCodeController.getAll);
 
+  router.post("/verify/:code", registrationsCodeController.verify);
+
 router
   .route("/:id")
   .get(registrationsCodeController.getById)
   .put(registrationsCodeController.update)
   .delete(registrationsCodeController.remove);
 
-router.post("/verify", registrationsCodeController.verify);
 
 export default router;

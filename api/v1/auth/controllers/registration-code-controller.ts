@@ -15,8 +15,14 @@ const create = async (req: Request, res: Response): Promise<void> => {
   res.status(201).json({ registrationCode });
 };
 
+// verify registration code
 const verify = async (req: Request, res: Response): Promise<void> => {
-  throw createCustomError("Not implemented", 501);
+  const { code } = req.params;
+  const registrationCode = await RegistrationCodeService.findById(code);
+  const found = !!registrationCode;
+  res.status(200).json({
+    found,
+  });
 };
 
 const getAll = async (req: Request, res: Response): Promise<void> => {
