@@ -1,8 +1,8 @@
 .env
 node_modules
 package-lock.json
-utils/env/production.ts
-utils/env/test.ts
+utils/constants/production.ts
+utils/constants/test.ts
 # unimplimented
 api/v1/scout/models/scout.ts
 # vs code

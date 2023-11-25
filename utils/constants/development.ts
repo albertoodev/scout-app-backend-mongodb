@@ -13,4 +13,11 @@ export default {
     refreshToken: process.env.REFRESH_TOKEN,
     email: process.env.EMAIL,
   },
+  regExp: {
+    email: /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/,
+    password: /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[A-Za-z\d@$!%*?&]{8,}$/,
+    phone: /^(05|06|07)\d{8}$/, // only for algerian local phone numbers
+    verCode: /^\d{6}$/,
+    code: /^[0-9a-fA-F]{24}$/, // only for mongodb object id
+  } as Record<string, RegExp>,
 };
