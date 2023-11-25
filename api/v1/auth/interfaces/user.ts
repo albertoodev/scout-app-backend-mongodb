@@ -1,4 +1,5 @@
 import mongoose, { Document } from "mongoose";
+import IRegistrationCode from "./registration-code";
 
 interface IUser extends Document {
   firstName: string;
@@ -7,12 +8,11 @@ interface IUser extends Document {
   password: string;
   phone: string;
   bio?: string;
-  code: mongoose.Types.ObjectId;
+  code: mongoose.Types.ObjectId | IRegistrationCode;
   createdAt?: Date;
 }
 
 export default IUser;
-
 
 /// i made this interface to be used when returning user data to the client
 /// so that the password field is not returned to the client
@@ -30,7 +30,5 @@ interface IUserOutput {
   createdAt: Date;
   updatedAt?: Date;
 }
-
-
 
 export { IUserOutput };
