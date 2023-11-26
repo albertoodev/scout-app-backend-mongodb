@@ -6,16 +6,15 @@ const stringToObjectId = (id: string): Types.ObjectId => new Types.ObjectId(id);
 const listToObjectId = (list: string[]): Types.ObjectId[] =>
   list.map((id) => stringToObjectId(id));
 
-/// for [request]
-const filterValidQueries = (
+const filterValidProperties = (
   validKeys: string[],
-  queryParams: Record<string, any>
+  properties: Record<string, any>
 ): Record<string, any> => {
-  const filteredQueries: Record<string, any> = {};
+  const filteredProperties: Record<string, any> = {};
   validKeys.forEach((input) => {
-    if (queryParams[input]) filteredQueries[input] = queryParams[input];
+    if (properties[input]) filteredProperties[input] = properties[input];
   });
-  return filteredQueries;
+  return filteredProperties;
 };
 
 export {
@@ -23,5 +22,5 @@ export {
   stringToObjectId,
   listToObjectId,
   /// for [request]
-  filterValidQueries,
+  filterValidProperties,
 };
