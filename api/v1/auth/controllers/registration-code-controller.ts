@@ -1,12 +1,11 @@
 import { Request, Response } from "express";
 import { createCustomError } from "../../../../utils/errors/custom-error";
-import IRegistrationCode from "../interfaces/registration-code";
 import RegistrationCodeService from "../services/registration-code";
 import { listToObjectId, filterValidProperties } from "../../../../utils/utils";
 
 // create registration code
 const create = async (req: Request, res: Response): Promise<void> => {
-  let data: IRegistrationCode = req.body;
+  let data = filterValidProperties(["role", "limit", "children"], req.body);
   data.children = listToObjectId((data.children as string[]) ?? []);
   const registrationCode = await RegistrationCodeService.create(data);
   if (!registrationCode) {
@@ -55,7 +54,12 @@ const update = async (req: Request, res: Response): Promise<void> => {
 };
 
 const remove = async (req: Request, res: Response): Promise<void> => {
-  throw createCustomError("Not implemented", 501);
+  const { id } = req.params;
+  const registrationCode = await RegistrationCodeService.remove(id);
+  if (!registrationCode) {
+    throw createCustomError("Registration code not found", 404);
+  }
+  res.status(200).json(registrationCode);
 };
 
 export default {

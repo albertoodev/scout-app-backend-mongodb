@@ -17,7 +17,7 @@ const update = async (
   id: string,
   data: any
 ): Promise<IRegistrationCode | null> => {
-  return RegistrationCode.findOneAndUpdate({ _id: id }, data, {
+  return RegistrationCode.findOneAndUpdate({ _id: data._id }, data, {
     new: true,
   });
 };
