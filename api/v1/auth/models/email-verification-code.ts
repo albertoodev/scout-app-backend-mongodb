@@ -27,6 +27,10 @@ const EmailVerificationCodeSchema: Schema<IEmailVerificationCode> =
       default: Date.now,
     },
   });
+
+// Creating a compound index on 'email' and 'type' to enforce uniqueness for the pair
+EmailVerificationCodeSchema.index({ email: 1, type: 1 }, { unique: true });
+
 const EmailVerificationCode = mongoose.model<IEmailVerificationCode>(
   "EmailVerificationCode",
   EmailVerificationCodeSchema

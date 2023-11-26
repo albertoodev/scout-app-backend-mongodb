@@ -4,7 +4,7 @@ import IEmailVerificationCode from "../interfaces/email-verification-code";
 const create = async (
   code: string,
   email: string,
-  type: string
+  type?: string
 ): Promise<IEmailVerificationCode> => {
   const verificationCode = new EmailVerificationCode({
     code,
@@ -13,22 +13,16 @@ const create = async (
   });
   return await verificationCode.save();
 };
-
-const getAll = async (queries: any): Promise<IEmailVerificationCode[]> => {
-  return await EmailVerificationCode.find(queries);
-};
-
-const getOne = async (id: string): Promise<IEmailVerificationCode | null> => {
-  return await EmailVerificationCode.findById(id);
-};
-
 const update = async (
-  id: string,
-  data: any
+  email: string,
+  type: string,
+  verCode: string
 ): Promise<IEmailVerificationCode | null> => {
-  return await EmailVerificationCode.findByIdAndUpdate(id, data, {
-    new: true,
-  });
+  return await EmailVerificationCode.findOneAndUpdate(
+    { email, type },
+    { verCode },
+    { new: true }
+  );
 };
 
 const remove = async (id: string): Promise<IEmailVerificationCode | null> => {
@@ -37,8 +31,6 @@ const remove = async (id: string): Promise<IEmailVerificationCode | null> => {
 
 export default {
   create,
-  getAll,
-  getOne,
   update,
   remove,
 };
