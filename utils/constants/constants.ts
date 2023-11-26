@@ -4,11 +4,14 @@ import test from "./test";
 import dotenv from "dotenv";
 dotenv.config();
 
-const constants = process.env.NODE_ENV || "dev";
+const node_env = process.env.NODE_ENV || "prod";
 const configs: any = {
   dev, // development
   prod, // production
   test,
 };
 
-export default configs[constants];
+export default {
+  node_env,
+  ...configs[node_env],
+};

@@ -25,7 +25,7 @@ async function sendEmail(
     clientSecret,
     redirectUri
   );
-  console.log(refreshToken);
+
   // Set the OAuth2 client credentials
   oAuth2Client.setCredentials({
     refresh_token: refreshToken,

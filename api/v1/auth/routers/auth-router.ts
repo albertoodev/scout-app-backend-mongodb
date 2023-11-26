@@ -31,7 +31,7 @@ router.post(
 
 router.post(
   "/check-verification-code",
-  requiredFields([["email", "code"]]),
+  requiredFields([["email", "verCode"]]),
   authController.checkVerificationCode
 );
 

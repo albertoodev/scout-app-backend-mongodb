@@ -18,12 +18,12 @@ const isExist = async (
   verCode: string,
   email: string,
   type: string
-): Promise<boolean> => {
-  return !!(await EmailVerificationCode.findOne({
+): Promise<{ _id: string }> => {
+  return await EmailVerificationCode.findOne({
     email,
     type,
     verCode,
-  }).select("verCode"));
+  }).select("_id");
 };
 
 const remove = async (id: string): Promise<IEmailVerificationCode | null> => {
