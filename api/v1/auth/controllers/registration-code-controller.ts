@@ -12,7 +12,7 @@ const create = async (req: Request, res: Response): Promise<void> => {
   if (!registrationCode) {
     throw createCustomError("Registration code not created", 500);
   }
-  res.status(201).json({ registrationCode });
+  res.status(201).json(registrationCode);
 };
 
 // verify registration code
@@ -31,13 +31,19 @@ const getAll = async (req: Request, res: Response): Promise<void> => {
   if (!registrationCodes) {
     throw createCustomError("Registration codes not found", 404);
   }
-  res.status(200).json({ registrationCodes });
+  res.status(200).json(registrationCodes);
 };
 
 const getById = async (req: Request, res: Response): Promise<void> => {
-  throw createCustomError("Not implemented", 501);
+  const { id } = req.params;
+  const registrationCode = await RegistrationCodeService.findById(id);
+  if (!registrationCode) {
+    throw createCustomError("Registration code not found", 404);
+  }
+  res.status(200).json(registrationCode);
 };
-/// this method is for updating the rule of the registration code or the usage of it (used or not)
+
+/// this method is for updating the role of the registration code or the usage of it (used or not)
 const update = async (req: Request, res: Response): Promise<void> => {
   throw createCustomError("Not implemented", 501);
 };
