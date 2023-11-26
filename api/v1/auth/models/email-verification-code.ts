@@ -8,7 +8,7 @@ const EmailVerificationCodeSchema: Schema<IEmailVerificationCode> =
       type: String,
       required: true,
       unique: true,
-      match: [constants.regExp.code, "Please provide a valid code"],
+      match: [constants.regExp.verCode, "Please provide a valid code"],
     },
     email: {
       type: String,

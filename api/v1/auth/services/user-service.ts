@@ -13,6 +13,11 @@ const getByEmail = async (email: string): Promise<IUser> => {
   return await User.findOne({ email }).select("-password");
 };
 
+const isUsed = async (data: any): Promise<boolean> => {
+  const user = await User.findOne(data);
+  return !!user;
+};
+
 const getByPhone = async (phone: string): Promise<IUser> => {
   return await User.findOne({ phone }).select("-password");
 };
@@ -39,4 +44,5 @@ export default {
   getAll,
   update,
   remove,
+  isUsed,
 };
