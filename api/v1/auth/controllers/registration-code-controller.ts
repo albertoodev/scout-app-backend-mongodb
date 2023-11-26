@@ -2,7 +2,7 @@ import { Request, Response } from "express";
 import { createCustomError } from "../../../../utils/errors/custom-error";
 import IRegistrationCode from "../interfaces/registration-code";
 import RegistrationCodeService from "../services/registration-code";
-import { listToObjectId } from "../../../../utils/db/utils";
+import { listToObjectId, filterValidQueries } from "../../../../utils/utils";
 
 // create registration code
 const create = async (req: Request, res: Response): Promise<void> => {
@@ -26,11 +26,7 @@ const verify = async (req: Request, res: Response): Promise<void> => {
 };
 
 const getAll = async (req: Request, res: Response): Promise<void> => {
-  const { role } = req.query;
-  let filter = {};
-  if (role) {
-    filter = { role: role.toString() };
-  }
+  const filter = filterValidQueries(["role"], req.query);
   const registrationCodes = await RegistrationCodeService.find(filter);
   if (!registrationCodes) {
     throw createCustomError("Registration codes not found", 404);
