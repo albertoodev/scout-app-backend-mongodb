@@ -13,8 +13,11 @@ const findById = async (code: string): Promise<IRegistrationCode | null> => {
   return await RegistrationCode.findById(code);
 };
 
-const update = async (data: any): Promise<IRegistrationCode | null> => {
-  return RegistrationCode.findOneAndUpdate({ _id: data._id }, data, {
+const update = async (
+  id: string,
+  data: any
+): Promise<IRegistrationCode | null> => {
+  return RegistrationCode.findOneAndUpdate({ _id: id }, data, {
     new: true,
   });
 };
