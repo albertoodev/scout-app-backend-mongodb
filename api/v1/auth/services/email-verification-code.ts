@@ -13,17 +13,6 @@ const create = async (
   });
   return await verificationCode.save();
 };
-const update = async (
-  email: string,
-  type: string,
-  verCode: string
-): Promise<IEmailVerificationCode | null> => {
-  return await EmailVerificationCode.findOneAndUpdate(
-    { email, type },
-    { verCode },
-    { new: true }
-  );
-};
 
 const remove = async (id: string): Promise<IEmailVerificationCode | null> => {
   return await EmailVerificationCode.findByIdAndDelete(id);
@@ -31,6 +20,5 @@ const remove = async (id: string): Promise<IEmailVerificationCode | null> => {
 
 export default {
   create,
-  update,
   remove,
 };
