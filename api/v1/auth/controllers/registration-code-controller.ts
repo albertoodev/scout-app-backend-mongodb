@@ -26,7 +26,16 @@ const verify = async (req: Request, res: Response): Promise<void> => {
 };
 
 const getAll = async (req: Request, res: Response): Promise<void> => {
-  throw createCustomError("Not implemented", 501);
+  const { role } = req.query;
+  let filter = {};
+  if (role) {
+    filter = { role: role.toString() };
+  }
+  const registrationCodes = await RegistrationCodeService.find(filter);
+  if (!registrationCodes) {
+    throw createCustomError("Registration codes not found", 404);
+  }
+  res.status(200).json({ registrationCodes });
 };
 
 const getById = async (req: Request, res: Response): Promise<void> => {
