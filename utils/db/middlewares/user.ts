@@ -3,6 +3,8 @@ import { DocumentType } from "../types";
 import IUser from "../../../api/v1/auth/interfaces/user";
 import { createCustomError } from "../../errors/custom-error";
 import { IRegistrationCode } from "../../../api/v1/auth/models/registration-code";
+import bcrypt from "bcrypt";
+import User from "../../../api/v1/auth/models/user";
 
 async function decrementCodeLimit(
   this: DocumentType<IUser>,
@@ -45,8 +47,20 @@ async function incrementCodeLimit(
   }
 }
 
-export { decrementCodeLimit, incrementCodeLimit };
-export default { decrementCodeLimit, incrementCodeLimit };
+async function cryptPassword(this: DocumentType<IUser>, next: NextFunction) {
+  if (!this.isNew) {
+    next();
+  }
+  if (!this.password) {
+    throw createCustomError("Please provide a password", 400);
+  }
+  const password: string = await bcrypt.hash(this.password, 10);
+  this.password = password;
+  next();
+}
+
+export { cryptPassword, decrementCodeLimit, incrementCodeLimit };
+export default { cryptPassword, decrementCodeLimit, incrementCodeLimit };
 
 /// private methods
 

@@ -43,7 +43,7 @@ const UserSchema: Schema<IUser> = new mongoose.Schema({
     default: Date.now,
   },
 });
-
+UserSchema.pre("save", userMiddlewares.cryptPassword as any);
 UserSchema.pre("save", userMiddlewares.decrementCodeLimit as any);
 UserSchema.post("save", userMiddlewares.incrementCodeLimit as any);
 
