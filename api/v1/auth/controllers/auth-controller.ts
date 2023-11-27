@@ -1,9 +1,10 @@
-import e, { Request, Response } from "express";
+import { Request, Response } from "express";
 import { createCustomError } from "../../../../utils/errors/custom-error";
 import userService from "../services/user-service";
 import EmailVerificationCodeService from "../services/email-verification-code";
 import sendEmail, { MailType } from "../../../../utils/mailer/mailer";
 import constants from "../../../../utils/constants/constants";
+import { IUser } from "../models/user";
 // login
 const login = async (req: Request, res: Response): Promise<void> => {
   throw createCustomError("Not implemented", 501);
@@ -74,7 +75,12 @@ const checkVerificationCode = async (
 };
 
 const register = async (req: Request, res: Response): Promise<void> => {
-  throw createCustomError("Not implemented", 501);
+  const data: IUser = req.body;
+  const user = await userService.create(data);
+  if (!user) {
+    throw createCustomError("User not created", 500);
+  }
+  res.status(201).json(user);
 };
 
 // forgot password

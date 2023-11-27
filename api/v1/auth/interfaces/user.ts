@@ -19,16 +19,9 @@ export default IUser;
 /// nor the code and the children infos
 /// i ll return only the ids of the children and the user role
 
-interface IUserOutput {
-  firstName: string;
-  lastName: string;
-  email: string;
-  phone: string;
-  bio?: string;
+interface IUserOutput extends IUser {
   role: string;
   children?: mongoose.Types.ObjectId[];
-  createdAt: Date;
-  updatedAt?: Date;
 }
 
 export { IUserOutput };

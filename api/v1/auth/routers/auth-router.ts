@@ -38,7 +38,7 @@ router.post(
 router.post(
   "/register",
   requiredFields([
-    ["firstName", "lastName", "email", "password", "phone", "verCode"],
+    ["firstName", "lastName", "email", "password", "phone", "code"],
   ]),
   authController.register
 );
