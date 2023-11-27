@@ -29,4 +29,5 @@ const RegistrationCode = mongoose.model<IRegistrationCode>(
   RegistrationCodeSchema
 );
 
+export { IRegistrationCode };
 export default RegistrationCode;
