@@ -1,8 +1,8 @@
 import User from "../models/user";
-import IUser from "../interfaces/user";
+import IUser, { IUserOutput } from "../interfaces/user";
 
-const create = async (user: IUser): Promise<IUser> => {
-  return await User.create(user);
+const create = async (user: IUser): Promise<IUserOutput> => {
+  return (await User.create(user)) as IUserOutput;
 };
 
 const getById = async (id: string): Promise<IUser> => {
@@ -22,8 +22,18 @@ const getByPhone = async (phone: string): Promise<IUser> => {
   return await User.findOne({ phone }).select("-password");
 };
 
-const getAll = async (queries: any): Promise<IUser[]> => {
-  return await User.find(queries).select("-password");
+const getAll = async (queries: any): Promise<IUserOutput[]> => {
+  const users: any = await User.find(queries)
+    .populate("code", "role children")
+    .select("-password");
+  return users.map((user: any) => {
+    return {
+      ...user.toJSON(),
+      code: user.code._id,
+      role: user.code.role,
+      children: user.code.children,
+    };
+  });
 };
 
 const update = async (id: string, data: any): Promise<IUser | null> => {
