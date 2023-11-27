@@ -4,7 +4,6 @@ import IUser from "../../../api/v1/auth/interfaces/user";
 import { createCustomError } from "../../errors/custom-error";
 import { IRegistrationCode } from "../../../api/v1/auth/models/registration-code";
 import bcrypt from "bcrypt";
-import User from "../../../api/v1/auth/models/user";
 
 async function decrementCodeLimit(
   this: DocumentType<IUser>,

@@ -6,13 +6,15 @@ import userMiddlewares from "../../../../utils/db/middlewares/user";
 const UserSchema: Schema<IUser> = new mongoose.Schema({
   firstName: {
     type: String,
-    required: true,
-    minlength: 5,
+    required: [true, "Please provide a first name"],
+    minlength: 3,
     maxlength: 20,
   },
   lastName: {
     type: String,
     required: [true, "Please provide a last name"],
+    minlength: 3,
+    maxlength: 20,
   },
   email: {
     type: String,
