@@ -45,6 +45,29 @@ const UserSchema: Schema<IUser> = new mongoose.Schema({
     default: Date.now,
   },
 });
+
+UserSchema.methods.comparePassword = function (
+  this: IUser,
+  candidatePassword: string
+): Promise<boolean> {
+  console.log(this);
+  return userMiddlewares.verifyPassword(candidatePassword, this.password ?? "");
+};
+
+UserSchema.methods.output = function (this: IUser) {
+  return {
+    _id: this._id,
+    firstName: this.firstName,
+    lastName: this.lastName,
+    email: this.email,
+    phone: this.phone,
+    bio: this.bio,
+    code: this.code,
+    role: (this.code as any).role,
+    children: (this.code as any).children,
+    createdAt: this.createdAt,
+  };
+};
 UserSchema.pre("save", userMiddlewares.cryptPassword as any);
 UserSchema.pre("save", userMiddlewares.decrementCodeLimit as any);
 UserSchema.post("save", userMiddlewares.incrementCodeLimit as any);
