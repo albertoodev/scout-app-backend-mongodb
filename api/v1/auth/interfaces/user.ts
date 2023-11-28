@@ -11,6 +11,7 @@ interface IUser extends Document {
   bio?: string;
   code: mongoose.Types.ObjectId | IRegistrationCode;
   createdAt?: Date;
+  comparePassword(candidatePassword: string): Promise<boolean>;
   output(): {
     _id: string;
     firstName: string;

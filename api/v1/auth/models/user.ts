@@ -54,6 +54,16 @@ UserSchema.methods.comparePassword = function (
   return userMiddlewares.verifyPassword(candidatePassword, this.password ?? "");
 };
 
+UserSchema.methods.comparePassword = function (
+  this: IUser,
+  candidatePassword: string
+): Promise<boolean> {
+  if (!this.password) {
+    throw new Error("Password is not defined");
+  }
+  return userMiddlewares.verifyPassword(candidatePassword, this.password);
+};
+
 UserSchema.methods.output = function (this: IUser) {
   return {
     _id: this._id,
