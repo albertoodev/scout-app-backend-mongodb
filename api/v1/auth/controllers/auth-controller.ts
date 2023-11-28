@@ -6,7 +6,6 @@ import sendEmail, { MailType } from "../../../../utils/mailer/mailer";
 import constants from "../../../../utils/constants/constants";
 import { IUser } from "../models/user";
 import { generateToken } from "../../../../utils/jwt/token-service";
-import IRegistrationCode from "../interfaces/registration-code";
 
 // login
 const login = async (req: Request, res: Response): Promise<void> => {
@@ -110,7 +109,10 @@ const register = async (req: Request, res: Response): Promise<void> => {
   if (!user) {
     throw createCustomError("User not created", 500);
   }
-  res.status(201).json(user);
+  res.status(201).json({
+    success: true,
+    message: "User created successfully",
+  });
 };
 
 // forgot password
