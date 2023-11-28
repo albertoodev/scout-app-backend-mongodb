@@ -72,12 +72,13 @@ UserSchema.methods.output = function (this: IUser) {
     email: this.email,
     phone: this.phone,
     bio: this.bio,
-    code: this.code,
+    code: (this.code as any)._id,
     role: (this.code as any).role,
     children: (this.code as any).children,
     createdAt: this.createdAt,
   };
 };
+
 UserSchema.pre("save", userMiddlewares.cryptPassword as any);
 UserSchema.pre("save", userMiddlewares.decrementCodeLimit as any);
 UserSchema.post("save", userMiddlewares.incrementCodeLimit as any);

@@ -7,12 +7,10 @@ if (!secretKey) {
 }
 
 /// i think i ll add the role to the payload later for the authorization middleware
-const generatePasswordResetToken = (
-  id: string,
-  email: string,
+const generateToken = (
+  payload: { id: string; role: string; email: string },
   expiration: string
 ): string => {
-  const payload = { id, email };
   const token = jwt.sign(payload, secretKey, { expiresIn: expiration });
   return token;
 };
@@ -22,4 +20,4 @@ const verifyPasswordResetToken = (token: string) => {
   return decodedToken;
 };
 
-export { generatePasswordResetToken, verifyPasswordResetToken };
+export { generateToken, verifyPasswordResetToken };

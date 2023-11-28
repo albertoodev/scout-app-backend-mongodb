@@ -5,6 +5,16 @@ import { createCustomError } from "../../errors/custom-error";
 import { IRegistrationCode } from "../../../api/v1/auth/models/registration-code";
 import bcrypt from "bcrypt";
 
+/// pre methods
+// login
+async function verifyPassword(
+  password: string,
+  hashedPassword: string
+): Promise<boolean> {
+  return await bcrypt.compare(password, hashedPassword);
+}
+
+// register
 async function decrementCodeLimit(
   this: DocumentType<IUser>,
   next: NextFunction
@@ -53,13 +63,24 @@ async function cryptPassword(this: DocumentType<IUser>, next: NextFunction) {
   if (!this.password) {
     throw createCustomError("Please provide a password", 400);
   }
-  const password: string = await bcrypt.hash(this.password, 10);
-  this.password = password;
+  const salt = await bcrypt.genSalt(10);
+  const hashedPassword = await bcrypt.hash(this.password, salt);
+  this.password = hashedPassword;
   next();
 }
 
-export { cryptPassword, decrementCodeLimit, incrementCodeLimit };
-export default { cryptPassword, decrementCodeLimit, incrementCodeLimit };
+export {
+  verifyPassword,
+  cryptPassword,
+  decrementCodeLimit,
+  incrementCodeLimit,
+};
+export default {
+  verifyPassword,
+  cryptPassword,
+  decrementCodeLimit,
+  incrementCodeLimit,
+};
 
 /// private methods
 

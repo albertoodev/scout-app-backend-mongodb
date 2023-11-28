@@ -1,16 +1,24 @@
 import User from "../models/user";
-import IUser, { IUserOutput } from "../interfaces/user";
+import IUser from "../interfaces/user";
 
-const create = async (user: IUser): Promise<IUserOutput> => {
-  return (await User.create(user)) as IUserOutput;
+const create = async (user: IUser): Promise<IUser> => {
+  return (await User.create(user)) as IUser;
 };
 
-const getById = async (id: string): Promise<IUser> => {
-  return await User.findById(id).select("-password");
+const getById = async (id: string) => {
+  return await User.findById(id);
 };
 
 const getByEmail = async (email: string): Promise<IUser> => {
-  return await User.findOne({ email }).select("-password");
+  return await User.findOne({ email })
+    .populate("code", "role children")
+    .select("+password");
+};
+
+const getByPhone = async (phone: string): Promise<IUser> => {
+  return await User.findOne({ phone })
+    .populate("code", "role children")
+    .select("+password");
 };
 
 const isUsed = async (data: any): Promise<boolean> => {
@@ -18,22 +26,9 @@ const isUsed = async (data: any): Promise<boolean> => {
   return !!user;
 };
 
-const getByPhone = async (phone: string): Promise<IUser> => {
-  return await User.findOne({ phone }).select("-password");
-};
-
-const getAll = async (queries: any): Promise<IUserOutput[]> => {
-  const users: any = await User.find(queries)
-    .populate("code", "role children")
-    .select("-password");
-  return users.map((user: any) => {
-    return {
-      ...user.toJSON(),
-      code: user.code._id,
-      role: user.code.role,
-      children: user.code.children,
-    };
-  });
+const getAll = async (queries: any): Promise<IUser[]> => {
+  const users: any = await User.find(queries).populate("code", "role children");
+  return users.map((user: IUser) => user.output());
 };
 
 const update = async (id: string, data: any): Promise<IUser | null> => {

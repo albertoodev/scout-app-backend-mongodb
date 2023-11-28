@@ -5,9 +5,39 @@ import EmailVerificationCodeService from "../services/email-verification-code";
 import sendEmail, { MailType } from "../../../../utils/mailer/mailer";
 import constants from "../../../../utils/constants/constants";
 import { IUser } from "../models/user";
+import { generateToken } from "../../../../utils/jwt/token-service";
+import IRegistrationCode from "../interfaces/registration-code";
+
 // login
 const login = async (req: Request, res: Response): Promise<void> => {
-  throw createCustomError("Not implemented", 501);
+  const { email, phone, password } = req.body;
+  let user;
+  if (email) {
+    user = await userService.getByEmail(email);
+  } else if (phone) {
+    user = await userService.getByPhone(phone);
+  }
+  if (!user) {
+    throw createCustomError("User not found", 400);
+  }
+  const isMatch = await user.comparePassword(password);
+  if (!isMatch) {
+    throw createCustomError("Invalid credentials", 400);
+  }
+  const token = generateToken(
+    {
+      id: user._id,
+      email: user.email,
+      role: (user.code as any).role,
+    },
+    "1h"
+  );
+  const data = user.output();
+  res.status(200).json({
+    data,
+    token,
+    message: "Logged in successfully",
+  });
 };
 
 // registration
