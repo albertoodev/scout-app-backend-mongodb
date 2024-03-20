@@ -13,7 +13,12 @@ const getAll = async (req: Request, res: Response): Promise<void> => {
 };
 
 const getUser = async (req: Request, res: Response): Promise<void> => {
-  throw createCustomError("Not implemented", 501);
+  const { id } = req.params;
+  const user = await userService.getById(id);
+  if (!user) {
+    throw createCustomError("User not found", 404);
+  }
+  res.status(200).json(user);
 };
 
 const updateUser = async (req: Request, res: Response): Promise<void> => {

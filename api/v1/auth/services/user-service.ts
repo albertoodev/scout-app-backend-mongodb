@@ -6,7 +6,9 @@ const create = async (user: IUser): Promise<IUser> => {
 };
 
 const getById = async (id: string) => {
-  return await User.findById(id);
+  let user = await User.findById(id).populate("code", "role children");
+  console.log(user);
+  return user?.output();
 };
 
 const getByEmail = async (email: string): Promise<IUser> => {

@@ -4,7 +4,7 @@ import test from "./test";
 import dotenv from "dotenv";
 dotenv.config();
 
-const node_env = process.env.NODE_ENV || "prod";
+const node_env = process.env.NODE_ENV || "dev";
 const configs: any = {
   dev, // development
   prod, // production

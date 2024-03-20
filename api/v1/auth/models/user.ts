@@ -46,13 +46,6 @@ const UserSchema: Schema<IUser> = new mongoose.Schema({
   },
 });
 
-UserSchema.methods.comparePassword = function (
-  this: IUser,
-  candidatePassword: string
-): Promise<boolean> {
-  console.log(this);
-  return userMiddlewares.verifyPassword(candidatePassword, this.password ?? "");
-};
 
 UserSchema.methods.comparePassword = function (
   this: IUser,
