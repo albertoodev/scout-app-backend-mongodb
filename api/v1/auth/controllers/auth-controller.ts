@@ -1,7 +1,7 @@
 import { Request, Response } from "express";
 import { createCustomError } from "../../../../utils/errors/custom-error";
 import userService from "../services/user-service";
-import EmailVerificationCodeService from "../services/email-verification-code";
+import emailVerificationCodeService from "../services/email-verification-code";
 import sendEmail, { MailType } from "../../../../utils/mailer/mailer";
 import constants from "../../../../utils/constants/constants";
 import { IUser } from "../models/user";
@@ -47,7 +47,7 @@ const verifyEmail = async (req: Request, res: Response): Promise<void> => {
     throw createCustomError("Email is already used", 400);
   }
   const verCode = Math.floor(100000 + Math.random() * 900000);
-  const code = await EmailVerificationCodeService.create(
+  const code = await emailVerificationCodeService.create(
     verCode.toString(),
     email
   );
@@ -88,7 +88,7 @@ const checkVerificationCode = async (
   res: Response
 ): Promise<void> => {
   const { email, verCode } = req.body;
-  const isExist = await EmailVerificationCodeService.isExist(
+  const isExist = await emailVerificationCodeService.isExist(
     verCode,
     email,
     "email"
@@ -96,7 +96,7 @@ const checkVerificationCode = async (
   if (!isExist) {
     throw createCustomError("Invalid verification code", 400);
   }
-  await EmailVerificationCodeService.remove(isExist._id);
+  await emailVerificationCodeService.remove(isExist._id);
   res.status(200).json({
     valid: true,
     message: "Verification code is valid",
@@ -121,7 +121,19 @@ const forgotPassword = async (req: Request, res: Response): Promise<void> => {
 };
 
 const resetPassword = async (req: Request, res: Response): Promise<void> => {
-  throw createCustomError("Not implemented", 501);
+  const { email, password, confirmPassword } = req.body;
+  //validate password and confirm password
+  if (password !== confirmPassword) {
+    throw createCustomError("Passwords do not match", 400);
+  }
+  const user = await userService.update({ email }, { password });
+  if (!user) {
+    throw createCustomError("Email does not exist in our  database.", 404);
+  }
+  res.status(200).json({
+    success: true,
+    message: "Reset Password Successfully.",
+  });
 };
 
 export default {

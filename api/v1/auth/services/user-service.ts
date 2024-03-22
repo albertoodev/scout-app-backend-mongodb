@@ -33,8 +33,8 @@ const getAll = async (queries: any): Promise<IUser[]> => {
   return users.map((user: IUser) => user.output());
 };
 
-const update = async (id: string, data: any): Promise<IUser | null> => {
-  return await User.findOneAndUpdate({ _id: id }, data, {
+const update = async (findQuery:any, data: any): Promise<IUser | null> => {
+  return await User.findOneAndUpdate(findQuery, data, {
     new: true,
     select: "-password",
   });
