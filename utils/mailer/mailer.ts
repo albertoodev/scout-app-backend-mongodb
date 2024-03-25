@@ -9,6 +9,11 @@ async function sendEmail(
   options: MailOptions,
   callback: (err: Error | null, info: unknown) => void
 ): Promise<void> {
+  if (constants.node_env !== "prod") {
+    console.log(`code: ${options.html?.mailData.code}`)
+    callback(null, true);
+    return;
+  }
   if (!options.text && !options.html) {
     throw new Error("You must provide either text or htmlFileName");
   }

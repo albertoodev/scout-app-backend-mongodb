@@ -65,43 +65,21 @@ const verifyEmail = async (req: Request, res: Response): Promise<void> => {
       },
     },
   };
-  if (constants.node_env !== "prod") {
+  sendEmail(options, (err, _) => {
+    if (err) {
+      throw err;
+    }
     res.status(200).json({
-      code: verCode.toString(),
       message: "Verification code sent successfully",
     });
-  } else {
-    sendEmail(options, (err, _) => {
-      if (err) {
-        throw err;
-      }
-      res.status(200).json({
-        message: "Verification code sent successfully",
-      });
-    });
-  }
+  });
 };
 
 /// this method is for checking the verification code for only for email verification code
 const checkVerificationCode = async (
   req: Request,
   res: Response
-): Promise<void> => {
-  const { email, verCode } = req.body;
-  const isExist = await emailVerificationCodeService.isExist(
-    verCode,
-    email,
-    "email"
-  );
-  if (!isExist) {
-    throw createCustomError("Invalid verification code", 400);
-  }
-  await emailVerificationCodeService.remove(isExist._id);
-  res.status(200).json({
-    valid: true,
-    message: "Verification code is valid",
-  });
-};
+): Promise<void> => checkCode(req, res, "email");
 
 const register = async (req: Request, res: Response): Promise<void> => {
   const data: IUser = req.body;
@@ -117,7 +95,41 @@ const register = async (req: Request, res: Response): Promise<void> => {
 
 // forgot password
 const forgotPassword = async (req: Request, res: Response): Promise<void> => {
-  throw createCustomError("Not implemented", 501);
+  const { email } = req.body;
+  const isUsed = await userService.isUsed({ email });
+
+  if (!isUsed) {
+    throw createCustomError("User does not exist.", 404);
+  }
+  const verCode = Math.floor(100000 + Math.random() * 900000);
+  const code = await emailVerificationCodeService.create(
+    verCode.toString(),
+    email,
+    "forgot-password"
+  );
+  if (!code) {
+    throw createCustomError("Something went wrong", 500);
+  }
+  // send mail with the code to reset password
+  const options = {
+    to: email,
+    subject: "Reset Password Code",
+    html: {
+      mailType: MailType.RESET_PASSWORD,
+      mailData: {
+        email,
+        code: verCode.toString(),
+      },
+    },
+  };
+  sendEmail(options, (err, _) => {
+    if (err) {
+      throw err;
+    }
+    res.status(200).json({
+      message: "Verification code sent successfully",
+    });
+  });
 };
 
 const resetPassword = async (req: Request, res: Response): Promise<void> => {
@@ -136,6 +148,29 @@ const resetPassword = async (req: Request, res: Response): Promise<void> => {
   });
 };
 
+const checkResetPassCode = async (req: Request, res: Response): Promise<void> =>
+  checkCode(req, res, "forgot-password");
+
+const checkCode = async (
+  req: Request,
+  res: Response,
+  type: "email" | "forgot-password"
+): Promise<void> => {
+  const { email, verCode } = req.body;
+  const isExist = await emailVerificationCodeService.isExist(
+    verCode,
+    email,
+    type
+  );
+  if (!isExist) {
+    throw createCustomError("Invalid code", 400);
+  }
+  await emailVerificationCodeService.remove(isExist._id);
+  res.status(200).json({
+    valid: true,
+    message: "The code is valid",
+  });
+};
 export default {
   login,
   verifyEmail,
@@ -143,4 +178,5 @@ export default {
   register,
   forgotPassword,
   resetPassword,
+  checkResetPassCode,
 };

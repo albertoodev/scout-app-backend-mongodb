@@ -46,10 +46,14 @@ router.post(
 // forgot password routes
 router
   .route("/reset-password")
-  .post(requiredFields([["email"]]), authController.forgotPassword)
+  .post(authController.forgotPassword)
   .put(
     requiredFields([["email", "password", "confirmPassword"]]),
     authController.resetPassword
   );
-
+router.post(
+  "/check-reset-pass-code",
+  requiredFields([["email", "verCode"]]),
+  authController.checkResetPassCode
+);
 export default router;
